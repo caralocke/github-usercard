@@ -5,13 +5,11 @@ import axios from 'axios'
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-const myGitHubInfo = axios.get('https://api.github.com/users/caralocke')
+const cardsEntryPoint = document.querySelector(".cards")
+const myGitHubInfo = axios
+.get('https://api.github.com/users/caralocke')
 // console.log(myGitHubInfo)
-.then(res => {
-  cardMaker(res.data)
-  console.log(myGitHubInfo)
-  }  
-)
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -24,7 +22,20 @@ const myGitHubInfo = axios.get('https://api.github.com/users/caralocke')
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
-
+function followerProfile(userProfile){
+axios
+.get(`https://api.github.com/users/${userProfile}`)
+.then(res => {
+  const card = cardMaker(res.data)
+  console.log(myGitHubInfo)
+  cardsEntryPoint.appendChild(card)
+  }  
+)
+.catch((error) => {
+  console.log(`here's where you messed up: ${error}`)
+})
+}
+followerProfile('CaraLocke')
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -36,7 +47,11 @@ const myGitHubInfo = axios.get('https://api.github.com/users/caralocke')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach(followerProfile)
+
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -66,7 +81,7 @@ const followersArray = [];
     luishrd
     bigknell
 */
-const cards = document.querySelector(".cards")
+
 function cardMaker(cardObj) {
   const card = document.createElement('div')
   const image = document.createElement('img')
@@ -107,6 +122,6 @@ function cardMaker(cardObj) {
   bio.textContent = `bio: ${cardObj.bio}`
   profile.textContent = `Profile: ${cardObj.url}`
   
-  cards.appendChild(card)
+  
   return card
 }
