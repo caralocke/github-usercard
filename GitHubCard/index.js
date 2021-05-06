@@ -6,7 +6,12 @@ import axios from 'axios'
     https://api.github.com/users/<your name>
 */
 const myGitHubInfo = axios.get('https://api.github.com/users/caralocke')
-console.log(myGitHubInfo)
+// console.log(myGitHubInfo)
+.then(res => {
+  cardMaker(res.data)
+  console.log(myGitHubInfo)
+  }  
+)
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -61,7 +66,7 @@ const followersArray = [];
     luishrd
     bigknell
 */
-
+const cards = document.querySelector(".cards")
 function cardMaker(cardObj) {
   const card = document.createElement('div')
   const image = document.createElement('img')
@@ -92,12 +97,16 @@ function cardMaker(cardObj) {
   username.classList.add('username')
 
   image.src = cardObj.avatar_url
-
+  name.textContent = cardObj.name
+  username.textContent = cardObj.login
+  address.textContent = cardObj.address
   location.textContent = cardObj.location
-  profile.textContent = cardObj.profile
-  followers.textContent = cardObj.followers
-  following.textContent = cardObj.following
-  bio.textContent = cardObj.bio
-
+  profile.textContent = `Profile: ${cardObj.profile}`
+  followers.textContent = `Followers: ${cardObj.followers}`
+  following.textContent = `Following: ${cardObj.following}`
+  bio.textContent = `bio: ${cardObj.bio}`
+  profile.textContent = `Profile: ${cardObj.url}`
+  
+  cards.appendChild(card)
   return card
 }
