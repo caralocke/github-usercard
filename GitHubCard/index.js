@@ -86,9 +86,20 @@ function cardMaker(obj) {
   card.classList.add('card')
   cardInfo.classList.add('card-info')
   name.classList.add('name')
+  username.classList.add('username')
 
+  image.src = obj.avatar_url
+  name.textContent = obj.name
+  username.textContent = obj.login
+  location.textContent = obj.location
+  profile.textContent = 'Profile:'
+  url.textContent = obj.url
+  followers.textContent = `Followers: ${obj.followers}`
+  following.textContent = `Following: ${obj.following}`
+  bio.textContent = obj.bio
+
+  return card
 }
-
 /*
   List of LS Instructors Github username's:
     tetondan
