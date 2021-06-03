@@ -1,11 +1,12 @@
-const { default: axios } = require("axios");
+import axios from 'axios'
 
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-axios.
+const cards = document.querySelector('.cards')
+const myGithub = axios.
 get('https://api.github.com/users/caralocke')
 .then(res => {
   console.log(res.data)
@@ -26,6 +27,17 @@ get('https://api.github.com/users/caralocke')
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+function followerProfile(userProfile) {
+  axios.get(`https://api.github.com/users/${userProfile}`)
+  .then (res => {
+    const card = cardMaker(res.data)
+    cards.appendChild(card)
+  })
+  .catch(err => {
+    console.log(`Here's where you messed up:\n`, err)
+  })
+}
+followerProfile('caralocke')
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
