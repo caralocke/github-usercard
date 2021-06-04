@@ -6,7 +6,7 @@ import axios from 'axios'
     https://api.github.com/users/<your name>
 */
 const cards = document.querySelector('.cards')
-const myGithub = axios.
+axios.
 get('https://api.github.com/users/caralocke')
 .then(res => {
   console.log(res.data)
@@ -49,10 +49,12 @@ followerProfile('caralocke')
     Using that array, iterate over it, requesting data for each user, creating a new card for each
     user, and adding that card to the DOM.
 */
-
+// Commented these out to try to fix my url not showing in my profile DON'T FORGET TO UNCOMMENT
 const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
-followersArray.forEach(followerProfile)
+followersArray.forEach(obj => {
+  followerProfile(obj)
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -81,37 +83,38 @@ function cardMaker(obj) {
   const username = document.createElement('p')
   const location = document.createElement('p')
   const profile = document.createElement('p')
-  const url = document.createElement('a')
+  const links = document.createElement('a')
   const followers = document.createElement('p')
   const following = document.createElement('p')
   const bio = document.createElement('p')
-
+  
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  username.classList.add('username')
+  
+  image.src = obj.avatar_url
+  name.textContent = obj.name
+  username.textContent = obj.login
+  location.textContent = obj.location
+  profile.textContent = `Profile:`
+  links.setAttribute = ('href', obj.url)
+  links.textContent = `${obj.url}`
+  followers.textContent = `Followers: ${obj.followers}`
+  following.textContent = `Following: ${obj.following}`
+  bio.textContent = obj.bio
+  
   card.appendChild(image)
   card.appendChild(cardInfo)
   cardInfo.appendChild(name)
   cardInfo.appendChild(username)
   cardInfo.appendChild(location)
   cardInfo.appendChild(profile)
-  profile.appendChild(url)
+  profile.appendChild(links)
   cardInfo.appendChild(followers)
   cardInfo.appendChild(following)
   cardInfo.appendChild(bio)
-
-  card.classList.add('card')
-  cardInfo.classList.add('card-info')
-  name.classList.add('name')
-  username.classList.add('username')
-
-  image.src = obj.avatar_url
-  name.textContent = obj.name
-  username.textContent = obj.login
-  location.textContent = obj.location
-  profile.textContent = 'Profile:'
-  url.textContent = obj.url
-  followers.textContent = `Followers: ${obj.followers}`
-  following.textContent = `Following: ${obj.following}`
-  bio.textContent = obj.bio
-
+  
   return card
 }
 /*
